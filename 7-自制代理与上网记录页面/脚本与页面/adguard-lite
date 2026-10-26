@@ -149,12 +149,20 @@ cleanup() {
 trap cleanup EXIT
 trap 'exit 1' HUP INT TERM
 builtin() {
+	# Keep this list tiny: always-on core ads/trackers even if feed update fails.
 	printf '%s\n' doubleclick.net googlesyndication.com googleadservices.com adservice.google.com \
 		pagead2.googlesyndication.com googleads.g.doubleclick.net ad.doubleclick.net \
 		pubads.g.doubleclick.net securepubads.g.doubleclick.net ads.mopub.com \
 		ads.adnxs.com ib.adnxs.com ads.pubmatic.com ads.rubiconproject.com \
 		adserver.adtechus.com adserver.adtech.de ads.openx.net ads.scorecardresearch.com \
-		ads.moatads.com pixel.adsafeprotected.com
+		ads.moatads.com pixel.adsafeprotected.com \
+		api.ad.xiaomi.com tracking.miui.com data.mistat.xiaomi.com \
+		ulogs.umeng.com alog.umeng.com errnewlog.umeng.com \
+		pgdt.gtimg.cn v.gdt.qq.com mi.gdt.qq.com \
+		api-access.pangolin-sdk-toutiao.com gromore.pangolin-sdk-toutiao.com \
+		cpro.baidu.com pos.baidu.com mobads.baidu.com \
+		click.tanx.com atanx.alicdn.com wgo.mmstat.com \
+		ad.partner.gifshow.com cm.bilibili.com
 }
 # Only a small allow-domain set is retained in awk. Domains are streamed;
 # sort's input is bounded by the persistent feed + 256 manual entries.
@@ -299,12 +307,12 @@ update_run() {
 	JOB_OWNER=1
 	job_state running ok updating
 	enabled || { fail disabled; return 1; }
-	[ "$(mem_available)" -ge 14000 ] || { fail low_memory; return 1; }
+	[ "$(mem_available)" -ge 10000 ] || { fail low_memory; return 1; }
 	# BusyBox ash RLIMIT_FSIZE uses 512-byte blocks: hard 256 KiB file cap.
-	# Timeout bounds the entire TLS/download operation, not just each request.
+	# Curated feed on home VPS: anti-AD + AdAway + CN app ads, trimmed to ~3700.
 	/usr/bin/timeout -k 3 40 /bin/sh -c '
 		ulimit -f 512 || exit 1
-		exec uclient-fetch -4 --no-proxy -q -T 12 -O "$1" https://adaway.org/hosts.txt
+		exec uclient-fetch -4 --no-proxy -q -T 12 -O "$1" http://104.223.72.99:18446/hosts.txt
 	' sh "$WORK/raw" > "$WORK/fetch.log" 2>&1 || { fail download_failed; return 1; }
 	[ -s "$WORK/raw" ] && [ "$(wc -c < "$WORK/raw")" -le 262144 ] || { fail download_size; return 1; }
 	# Parse hosts format only, reject localhost, IPs, invalid labels and HTML.
@@ -339,7 +347,7 @@ update_start() {
 	lock || { fail busy; return 1; }
 	enabled || { fail disabled; return 1; }
 	job_alive && { fail busy; return 1; }
-	[ "$(mem_available)" -ge 14000 ] || { fail low_memory; return 1; }
+	[ "$(mem_available)" -ge 10000 ] || { fail low_memory; return 1; }
 	rm -f "$PID"
 	job_state running ok starting
 	# A detached executable, not a background shell inheriting the RPC pipes.

@@ -58,20 +58,16 @@ var CSS = [
 	'.nm-sbtn{min-height:26px;padding:0 11px;border-radius:99px;border:1px solid var(--nm-line);background:transparent;color:inherit;font-size:12px;cursor:pointer}',
 	'.nm-sbtn:hover{border-color:var(--nm-a);color:var(--nm-a)}',
 	'.nm-tag.px{background:#8b5cf6}.nm-tag.dr{background:#64748b}',
-	'.nm-pager{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;margin:12px 0 14px}',
-	'.nm-pinfo{font-size:13px;opacity:.75;font-variant-numeric:tabular-nums}',
-	'.nm-pinfo b{opacity:1;font-weight:700}',
-	'.nm-pgs{display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:14px;border:1px solid var(--nm-line);background:rgba(127,127,127,.08);max-width:100%}',
-	'.nm-pg{min-width:36px;height:34px;padding:0 9px;border-radius:11px;border:0;background:transparent;color:inherit;font-size:14px;font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums}',
-	'.nm-pg:hover:not([disabled]):not(.on){background:rgba(127,127,127,.16)}',
-	'.nm-pg.on{background:linear-gradient(135deg,var(--nm-a),var(--nm-a2));color:#fff;box-shadow:0 3px 10px rgba(91,124,255,.35)}',
-	'.nm-pg[disabled]{opacity:.3;cursor:not-allowed}',
+	/* same pager layout as 广告拦截「已有规则」: 上一页 / 共 x 项 · 第 y / z 页 / 下一页 */
+	'.nm-pager{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:10px 0 14px;font-size:12px}',
+	'.nm-pager>span{flex:1 1 auto;text-align:center;opacity:.8;font-variant-numeric:tabular-nums}',
+	'.nm button.nm-pagebtn{box-sizing:border-box;flex:0 0 auto;border:1px solid var(--nm-line);background:transparent;color:inherit;border-radius:8px;height:28px;min-height:28px!important;width:auto;min-width:0;padding:0 12px!important;font-size:12px;line-height:26px;cursor:pointer}',
+	'.nm button.nm-pagebtn[disabled]{opacity:.35;cursor:not-allowed}',
 	/* a green accent line on every record */
 	'.nm-site,.nm-item{position:relative;padding-left:13px!important}',
 	'.nm-site:before,.nm-item:before{content:"";position:absolute;left:1px;top:9px;bottom:9px;width:3px;border-radius:3px;background:linear-gradient(180deg,#22c55e,#14b8a6)}',
-	'.nm-pg.arr{font-size:17px;line-height:1;min-width:32px}',
-	'.nm-pgdot{opacity:.6;padding:0 2px;font-size:13px}',
 	'.nm-tip{font-size:12.5px;opacity:.7;margin:10px 0 0;line-height:1.55}',
+	'@media(max-width:640px){.nm-pager{justify-content:center}.nm-pager>span{flex:0 0 100%;order:-1;margin-bottom:2px}.nm button.nm-pagebtn{flex:0 0 auto!important;width:auto!important}}',
 	'.nm-empty{padding:26px 8px;text-align:center;opacity:.65;font-size:14px}',
 	/* chart (plain HTML bars: stays readable on a phone) */
 	'.nm-leg{display:inline-flex;gap:14px;font-size:12.5px;font-weight:400;opacity:.85}',
@@ -593,7 +589,7 @@ return view.extend({
 					E('span', { 'style': 'opacity:.65;font-size:12.5px' }, '今日已用 ' + fmtB(usedToday)) ])
 			]));
 		}
-		/* page controls under a long list; key 's' = websites, 'r' = visit records. 8 per page on a phone, 20 elsewhere */
+		/* page controls: same markup/style as 广告拦截「已有规则」. 8/page on phone, 20 elsewhere */
 		function pager(total, key, card, redraw) {
 			var pk = key + 'p', size = window.matchMedia && window.matchMedia('(max-width:640px)').matches ? 8 : 20;
 			var pages = Math.max(1, Math.ceil(total / size));
@@ -601,20 +597,12 @@ return view.extend({
 			var page = S[pk], from = (page - 1) * size, to = Math.min(total, page * size), box = E('div', { 'class': 'nm-pager' });
 			if (pages < 2) return { box: box, from: 0, to: total };
 			function go(n) { return function() { S[pk] = n; redraw(); card.scrollIntoView({ behavior: 'smooth', block: 'start' }); }; }
-			function pb(label, enabled, on, fn, cls) {
-				var b = E('button', { 'type': 'button', 'class': 'nm-pg' + (on ? ' on' : '') + (cls ? ' ' + cls : ''), 'click': fn }, label);
-				b.disabled = !enabled; return b;
-			}
-			var grp = E('div', { 'class': 'nm-pgs' }), shown = {}, last = 0;
-			grp.appendChild(pb('‹', page > 1, false, go(page - 1), 'arr'));
-			[ 1, page - 1, page, page + 1, pages ].forEach(function(n) { if (n >= 1 && n <= pages) shown[n] = 1; });
-			Object.keys(shown).map(Number).sort(function(a, b) { return a - b; }).forEach(function(n) {
-				if (last && n - last > 1) grp.appendChild(E('span', { 'class': 'nm-pgdot' }, '…'));
-				grp.appendChild(pb(String(n), true, n === page, go(n))); last = n;
-			});
-			grp.appendChild(pb('›', page < pages, false, go(page + 1), 'arr'));
-			box.appendChild(E('span', { 'class': 'nm-pinfo' }, [ E('b', {}, (from + 1) + '–' + to), ' / ' + total ]));
-			box.appendChild(grp);
+			var prev = E('button', { 'type': 'button', 'class': 'nm-pagebtn', 'click': go(page - 1) }, '上一页');
+			var next = E('button', { 'type': 'button', 'class': 'nm-pagebtn', 'click': go(page + 1) }, '下一页');
+			prev.disabled = page <= 1; next.disabled = page >= pages;
+			box.appendChild(prev);
+			box.appendChild(E('span', {}, '共 ' + total + ' 项 · 第 ' + page + ' / ' + pages + ' 页'));
+			box.appendChild(next);
 			return { box: box, from: from, to: to };
 		}
 		/* reverse DNS for the entries that only have an address (apps that resolve names themselves, e.g. over HTTPDNS) */

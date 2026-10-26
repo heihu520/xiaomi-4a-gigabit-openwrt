@@ -17,7 +17,7 @@ var CSS = [
 	'.ag-title{font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}',
 	'.ag-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}',
 	'.ag-row>.ag-field{flex:1 1 180px;min-width:0;width:auto}',
-	'.ag-domains{min-height:96px;resize:vertical;line-height:1.5}',
+	'.ag-domains{min-height:96px;resize:vertical;line-height:1.5;margin-bottom:2px}',
 	'.ag-btn{min-height:38px;border:1px solid var(--ag-line);border-radius:8px;padding:5px 14px;background:transparent;color:inherit;font-size:14px;cursor:pointer}',
 	'.ag-btn.pri{background:var(--ag-a);border-color:var(--ag-a);color:#fff}',
 	'.ag-btn[disabled]{opacity:.45;cursor:wait}',
@@ -26,16 +26,28 @@ var CSS = [
 	'.ag-pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;background:rgba(127,127,127,.1);border-radius:4px;font-size:12px}',
 	'.ag-dot{width:7px;height:7px;border-radius:50%;background:#94a3b8}.ag-dot.on{background:var(--ag-ok)}',
 	'.ag-alert{padding:9px 12px;border:1px solid rgba(217,119,6,.35);background:rgba(245,158,11,.07);border-radius:6px;font-size:13px;line-height:1.6;margin:10px 0 14px}',
-	'.ag-list{margin-top:10px;max-height:330px;overflow:auto}',
-	'.ag-item{display:flex;align-items:center;gap:8px;padding:8px 2px;border-bottom:1px solid var(--ag-line);font-size:13px;min-width:0}',
+	'.ag-list{margin-top:10px;max-height:330px;overflow:auto;padding:0 4px}',
+	'.ag-item{padding:10px 8px 10px 10px;border-bottom:1px solid var(--ag-line);font-size:13px;min-width:0}',
 	'.ag-item:last-child{border-bottom:0}',
-	'.ag-name{flex:1;min-width:0;overflow-wrap:anywhere}',
-	'.ag-tag{display:inline-flex;align-items:center;justify-content:center;flex:0 0 52px;height:20px;font-size:11px;color:#fff;background:#64748b;border-radius:4px}',
+	'.ag-rule-item{display:grid;grid-template-columns:52px minmax(0,1fr) 24px;align-items:center;column-gap:8px}',
+	'.ag-scan-item{display:block}',
+	'.ag-scan-main{display:flex;align-items:center;gap:8px;min-width:0;min-height:24px}',
+	'.ag-check{display:inline-flex;align-items:center;justify-content:center;flex:0 0 20px;width:20px;height:24px}',
+	'.ag-check input[type=checkbox]{appearance:auto;-webkit-appearance:checkbox;width:16px;height:16px;margin:0;padding:0;flex:none;accent-color:var(--ag-a);vertical-align:middle}',
+	'.ag-host{flex:1 1 auto;min-width:0;overflow-wrap:anywhere;line-height:24px;font-size:13px}',
+	'.ag-name{min-width:0;overflow-wrap:anywhere;line-height:22px}',
+	'.ag-sub{display:block;margin:3px 0 0 88px;font-size:12px;line-height:1.35;opacity:.75}',
+	'.ag-tag{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;flex:0 0 52px;width:52px;height:24px;padding:0 4px;font-size:11px;line-height:1;color:#fff;background:#64748b;border-radius:4px;white-space:nowrap}',
 	'.ag-tag.block{background:#7c3aed}.ag-tag.allow{background:#0d9488}',
-	'.ag-tag.scan-state{flex-basis:88px}.ag-tag.added{background:#16a34a}.ag-tag.covered{background:#2563eb}.ag-tag.allowed{background:#0d9488}',
+	'.ag-tag.scan-state{flex:0 0 52px;width:52px;height:24px}.ag-tag.added{background:#16a34a}.ag-tag.covered{background:#2563eb}.ag-tag.allowed{background:#0d9488}',
 	'.ag-item input[disabled]{opacity:.5}.ag-note.ag-success{color:#15803d}.ag-note.ag-error{color:#dc2626}',
-	'.ag-mini{border:1px solid var(--ag-line);background:transparent;color:inherit;border-radius:6px;min-width:30px;min-height:30px;cursor:pointer;padding:2px 8px}',
-	'.ag-note{min-height:22px;font-size:13px;line-height:1.6;margin-top:8px;overflow-wrap:anywhere}',
+	'.ag button.ag-xbtn{box-sizing:border-box;width:24px;height:24px;min-width:24px;min-height:24px!important;padding:0!important;border:1px solid var(--ag-line);border-radius:6px;background:transparent;color:inherit;font-size:15px;line-height:22px;cursor:pointer;justify-self:end}',
+	'.ag button.ag-linkbtn{box-sizing:border-box;border:1px solid var(--ag-line);background:transparent;color:inherit;border-radius:6px;height:24px;min-height:24px!important;padding:0 8px!important;font-size:12px;line-height:22px;cursor:pointer;justify-self:end;white-space:nowrap}',
+	'.ag button.ag-pagebtn{box-sizing:border-box;border:1px solid var(--ag-line);background:transparent;color:inherit;border-radius:8px;height:28px;min-height:28px!important;padding:0 12px!important;font-size:12px;line-height:26px;cursor:pointer}',
+	'.ag button.ag-pagebtn[disabled]{opacity:.35;cursor:not-allowed}',
+	'.ag-note{font-size:13px;line-height:1.6;margin-top:8px;overflow-wrap:anywhere}',
+	'.ag-note:empty,.ag-list:empty{display:none;margin:0}',
+	'.ag-scan-actions{margin-top:8px}.ag-scan-actions.is-hidden{display:none}',
 	'.ag-toast{position:fixed!important;top:auto!important;left:auto!important;right:16px!important;bottom:calc(16px + env(safe-area-inset-bottom,0px))!important;transform:none!important;box-sizing:border-box;width:420px!important;height:auto!important;min-width:0!important;min-height:0!important;max-width:calc(100vw - 32px)!important;max-height:40vh;overflow:auto;z-index:20000!important;margin:0!important;padding:12px;gap:10px;align-items:center;border:1px solid #93c5fd;border-radius:8px;background:#eff6ff!important;color:#1e3a8a!important;font-size:14px;line-height:1.6;box-shadow:0 6px 24px rgba(0,0,0,.18);overflow-wrap:anywhere}',
 	'.ag-toast p{margin:0!important;font-size:14px;line-height:1.5;font-weight:400}.ag-toast>div:first-child{min-width:0}',
 	'.ag-toast.danger{border-color:#fca5a5;background:#fef2f2!important;color:#991b1b!important}',
@@ -43,10 +55,12 @@ var CSS = [
 	'.ag summary{cursor:pointer;list-style:none;font-size:15px;font-weight:700;min-height:30px}',
 	'.ag summary::-webkit-details-marker{display:none}',
 	'.ag details[open]>summary{margin-bottom:10px}',
-	'.ag-rules>summary{display:flex;align-items:center;flex-wrap:wrap;gap:8px;min-height:42px;padding:8px 10px;border:1px solid var(--ag-line);border-radius:8px;font-size:14px}',
-	'.ag-rules>summary:after{content:"";width:7px;height:7px;flex:0 0 auto;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);opacity:.6}',
-	'.ag-rules[open]>summary:after{transform:rotate(-135deg)}',
-	'.ag-rule-stats{flex:1;min-width:160px;text-align:right;font-size:11.5px;font-weight:400;opacity:.75;word-break:keep-all}',
+	'.ag-rules{margin-top:14px}',
+	'.ag-rules>summary{display:flex;align-items:center;gap:8px;min-height:42px;padding:8px 34px 8px 10px;border:1px solid var(--ag-line);border-radius:8px;font-size:14px;position:relative}',
+	'.ag-rules>summary:after{content:"";position:absolute;right:14px;top:50%;width:7px;height:7px;margin-top:-5px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);opacity:.6}',
+	'.ag-rules[open]>summary:after{margin-top:-2px;transform:rotate(-135deg)}',
+	'.ag-rule-title{flex:0 1 auto;min-width:0}',
+	'.ag-rule-stats{flex:1 1 auto;min-width:0;text-align:right;font-size:11.5px;font-weight:400;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
 	'.ag-rule-panel{padding:8px;border:1px solid var(--ag-line);border-radius:8px}',
 	'.ag-rule-controls{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}.ag-rule-controls>.ag-field{flex:1 1 160px;width:auto;min-width:0}',
 	'.ag-source-dd{flex:1 1 220px;min-width:0}.ag-source-dd>summary{display:flex;align-items:center;gap:8px;padding:8px 10px;min-height:40px;border:1px solid var(--ag-line);border-radius:8px;font-size:14px;font-weight:400}',
@@ -55,9 +69,9 @@ var CSS = [
 	'.ag-source-option{display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:13px;cursor:pointer;border-bottom:1px solid var(--ag-line)}.ag-source-option:last-child{border-bottom:0}.ag-source-option.cur{background:rgba(91,124,255,.12)}',
 	'.ag-source-name{flex:1;min-width:0}.ag-source-num{font-size:12px;opacity:.7}',
 	'.ag-tag.builtin{background:#2563eb}.ag-tag.feed{background:#d97706}.ag-tag.local{background:#7c3aed}',
-	'.ag-pager{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:12px}',
-	'.ag input[type=checkbox]{flex:0 0 auto;width:17px;height:17px;margin:0}',
-	'@media(max-width:640px){.ag{padding-top:40px}.ag-row .ag-btn{flex:1 1 auto}}'
+	'.ag-pager{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:10px;font-size:12px}',
+	'.ag-pager>span{flex:1 1 auto;text-align:center;opacity:.8;font-variant-numeric:tabular-nums}',
+	'@media(max-width:640px){.ag{padding-top:40px}.ag-row .ag-btn{flex:1 1 auto}.ag-rules>summary{flex-direction:column;align-items:flex-start;gap:4px;padding-right:34px}.ag-rule-stats{width:100%;text-align:left;white-space:normal;line-height:1.45;overflow:visible;text-overflow:clip}.ag-pager{justify-content:center}.ag-pager>span{flex:0 0 100%;order:-1;margin-bottom:2px}.ag button.ag-pagebtn{flex:0 0 auto!important;width:auto!important}}'
 ].join('\n');
 
 function kv(t) {
@@ -116,9 +130,9 @@ return view.extend({
 		} });
 		var sourceText = E('span'), sourceOptions = E('div', { 'class': 'ag-source-options' });
 		var sourceDropdown = E('details', { 'class': 'ag-source-dd' }, [ E('summary', {}, sourceText), sourceOptions ]);
-		var ruleTitle = E('span', {}, '已有规则'), ruleStats = E('span', { 'class': 'ag-rule-stats' });
-		var pageText = E('span'), prevPage = E('button', { 'type': 'button', 'class': 'ag-mini', 'click': function() { if (rulePage > 1) { rulePage--; loadRulePage().catch(function() {}); } } }, '上一页');
-		var nextPage = E('button', { 'type': 'button', 'class': 'ag-mini', 'click': function() { if (rulePage < rulePages) { rulePage++; loadRulePage().catch(function() {}); } } }, '下一页');
+		var ruleTitle = E('span', { 'class': 'ag-rule-title' }, '已有规则'), ruleStats = E('span', { 'class': 'ag-rule-stats' });
+		var pageText = E('span'), prevPage = E('button', { 'type': 'button', 'class': 'ag-pagebtn', 'click': function() { if (rulePage > 1) { rulePage--; loadRulePage().catch(function() {}); } } }, '上一页');
+		var nextPage = E('button', { 'type': 'button', 'class': 'ag-pagebtn', 'click': function() { if (rulePage < rulePages) { rulePage++; loadRulePage().catch(function() {}); } } }, '下一页');
 		var ruleDropdown = E('details', { 'class': 'ag-rules', 'toggle': function() {
 			if (ruleDropdown.open) loadRulePage().catch(function() {});
 			else { window.clearTimeout(ruleTimer); ruleSeq++; }
@@ -230,9 +244,9 @@ return view.extend({
 			records.forEach(function(r) {
 				var t = tags[r.source], local = r.source === 'block' || r.source === 'allow';
 				if (!t) return;
-				var action = local ? E('button', { 'type': 'button', 'class': 'ag-mini', 'title': '删除 ' + r.domain, 'click': function() { removeRule(r.kind, r.domain); } }, '×') :
-					E('button', { 'type': 'button', 'class': 'ag-mini', 'title': '放行 ' + r.domain, 'click': function() { act([ 'add', 'allow', r.domain ], '已将 ' + r.domain + ' 加入白名单。', ruleNote); } }, '放行');
-				list.appendChild(E('div', { 'class': 'ag-item', 'data-rule-source': r.source }, [ E('span', { 'class': 'ag-tag ' + t[0] }, t[1]), E('span', { 'class': 'ag-name' }, r.domain), action ]));
+				var action = local ? E('button', { 'type': 'button', 'class': 'ag-xbtn', 'title': '删除 ' + r.domain, 'click': function() { removeRule(r.kind, r.domain); } }, '×') :
+					E('button', { 'type': 'button', 'class': 'ag-linkbtn', 'title': '放行 ' + r.domain, 'click': function() { act([ 'add', 'allow', r.domain ], '已将 ' + r.domain + ' 加入白名单。', ruleNote); } }, '放行');
+				list.appendChild(E('div', { 'class': 'ag-item ag-rule-item', 'data-rule-source': r.source }, [ E('span', { 'class': 'ag-tag ' + t[0] }, t[1]), E('span', { 'class': 'ag-name' }, r.domain), action ]));
 			});
 			if (!records.length) list.appendChild(E('div', { 'class': 'ag-empty' }, '这个来源下没有匹配的规则。'));
 			pageText.textContent = '共 ' + ruleTotal + ' 项 · 第 ' + rulePage + ' / ' + rulePages + ' 页';
@@ -294,7 +308,7 @@ return view.extend({
 		function drawScan() {
 			while (scanList.firstChild) scanList.removeChild(scanList.firstChild);
 			var counts = { added: 0, covered: 0, allowed: 0, none: 0, unknown: 0 }, selected = 0;
-			var labels = { added: '已加入规则', covered: '已被规则覆盖', allowed: '白名单放行', none: '待加入', unknown: '状态未确认' };
+			var labels = { added: '已加入', covered: '已覆盖', allowed: '白名单', none: '待加入', unknown: '未确认' };
 			scanItems.forEach(function(it) {
 				var decision = labels[it.decision] ? it.decision : 'unknown', pending = decision === 'none';
 				counts[decision]++;
@@ -305,12 +319,18 @@ return view.extend({
 				cb.checked = !!it.selected;
 				var details = '相邻请求 ' + it.count + ' 次 · 设备 ' + it.client;
 				if (it.rule) details += ' · 规则 ' + it.rule;
-				scanList.appendChild(E('label', { 'class': 'ag-item', 'data-domain': it.domain, 'data-state': decision }, [ cb,
-					E('span', { 'class': 'ag-tag scan-state ' + decision }, labels[decision]),
-					E('span', { 'class': 'ag-name' }, [ it.domain, E('small', { 'class': 'muted', 'style': 'display:block' }, details) ]) ]));
+				scanList.appendChild(E('label', { 'class': 'ag-item ag-scan-item', 'data-domain': it.domain, 'data-state': decision }, [
+					E('div', { 'class': 'ag-scan-main' }, [
+						E('span', { 'class': 'ag-check' }, cb),
+						E('span', { 'class': 'ag-tag scan-state ' + decision }, labels[decision]),
+						E('span', { 'class': 'ag-host' }, it.domain)
+					]),
+					E('small', { 'class': 'muted ag-sub' }, details)
+				]));
 			});
 			scanSummary.textContent = scanned ? ('共 ' + scanItems.length + ' 条：已加入 ' + counts.added + '，已覆盖 ' + counts.covered + '，白名单 ' + counts.allowed + '，待加入 ' + counts.none + (counts.unknown ? '，状态未确认 ' + counts.unknown : '') + (st.enabled !== '1' ? '。服务已关闭，已保存的规则暂不生效。' : '。')) : '';
 			addScan.disabled = busy || scanning || !selected;
+			scanActions.className = 'ag-row ag-scan-actions' + (scanned && scanItems.length ? '' : ' is-hidden');
 		}
 		var scan = E('button', { 'type': 'button', 'class': 'ag-btn pri', 'click': function() {
 			if (busy || scanning) return;
@@ -334,7 +354,8 @@ return view.extend({
 			if (!picked.length) { feedback(scanNote, '没有勾选待加入的域名；已有规则不需要重复添加。', false); return; }
 			act([ 'batch-add', 'block', picked.join(' ') ], '添加成功：已加入 ' + picked.length + ' 条拦截规则。' + (st.enabled === '1' ? '规则已应用，设备 DNS 缓存可能需要稍后更新。' : '服务已关闭，开启后生效。'), scanNote);
 		} }, '加入勾选的广告域名');
-		parseRows(data[1]); drawList(); drawStatus();
+		var scanActions = E('div', { 'class': 'ag-row ag-scan-actions is-hidden' }, addScan);
+		parseRows(data[1]); drawList(); drawStatus(); drawScan();
 		poll.add(function() {
 			if (busy || scanning || refreshing) return Promise.resolve();
 			return call([ 'status' ]).then(function(t) {
@@ -357,8 +378,7 @@ return view.extend({
 				E('p', { 'class': 'muted' }, '规则量设有上限；更新时检查可用内存，失败时保留旧规则。不会强制接管设备的 DNS，也不会解密 HTTPS。') ]),
 			E('div', { 'class': 'ag-card' }, [ E('div', { 'class': 'ag-title' }, '网站广告域名分析'),
 				E('p', { 'class': 'muted' }, '先开启「上网记录 → 访问记录」，用设备浏览目标网站，再输入网站域名分析。同一设备在相近时间查询的已知广告域名会列为候选，检查后可一键加入。'),
-				E('div', { 'class': 'ag-row' }, [ scanIn, scan ]), scanNote, scanSummary, scanList,
-				E('div', { 'class': 'ag-row', 'style': 'margin-top:8px' }, addScan),
+				E('div', { 'class': 'ag-row' }, [ scanIn, scan ]), scanNote, scanSummary, scanList, scanActions,
 				E('p', { 'class': 'muted' }, '这不是通过 IP 反查确认归属，也不是完整的网页请求分析。没识别出的域名不会自动拦截，分析结果也不保证属于该网站。') ]),
 			E('div', { 'class': 'ag-card' }, [ E('div', { 'class': 'ag-title' }, '手动规则与白名单'),
 				E('p', { 'class': 'muted' }, '每行一个域名或网址，支持换行、空格和逗号分隔，一次最多 60 个不同域名。规则包含子域名，白名单优先；中文域名会自动转换。'),
